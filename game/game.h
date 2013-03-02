@@ -13,7 +13,26 @@
 
 using namespace std;
 
+class Game{
 
+	int boardsize;
+	int ** board;
+	int current_player;
+	int moves;
+	bool my_status;
+
+	char GetChar(int);
+
+public:
+	Game(int);
+	void Print();
+	void Reset();
+	vector<Move> ValidMove();
+	void MakeMove(Move);
+	int WhoWon();
+	bool IsFinished(){return my_status;};
+
+}
 //=================================
 // end guard
 #endif

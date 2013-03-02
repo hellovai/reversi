@@ -13,6 +13,9 @@
 
 using namespace std;
 
+typedef struct {
+	int x,y;
+} Move;
 
 void usage_err(string );
 
