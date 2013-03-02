@@ -21,7 +21,10 @@ class Game{
 	int moves;
 	bool my_status;
 
+	vector<Move> perimeter;
+
 	string GetChar(int);
+	bool Recurse(Move, int, bool);
 
 public:
 	Game(int);
@@ -29,6 +32,7 @@ public:
 	void Print(bool);
 	void Reset();
 	vector<Move> ValidMove();
+	vector<Move> ValidMove(bool show);
 	bool isValid(Move);
 	void MakeMove(Move);
 	int WhoWon();

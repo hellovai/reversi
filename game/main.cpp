@@ -24,7 +24,7 @@ int main (int argc, char* argv[]) {
 	for(int i=1; i<argc; i++) {
 		string temp = argv[i];
 		if(temp.compare("-b") == 0) {
-			if(++i >= argc) usage(temp);
+			if(++i >= argc) usage_err(temp);
 			boardsize = atoi(argv[i]);
 		} else if (temp.compare("-c1") == 0) {
 			c1 = true;
@@ -36,10 +36,11 @@ int main (int argc, char* argv[]) {
 			usage_err(temp);
 	}
 
-	boardsize = max(4, boardsize)
+	boardsize = max(4, boardsize);
 	boardsize = min(boardsize, 26);
-	
+
 	Game game(boardsize);
+	game.ValidMove();
 	game.Print();
 	return 0;
 
@@ -49,16 +50,16 @@ int main (int argc, char* argv[]) {
 		Move move;
 		
 		// alternate moves
-		if(game->turn() == 1)
-			if(c1) move = agent1->move();
-			else move = getHuman();
-		else
-			if(c2) move = agent2->move();
-			else move = getHuman();
+		// if(game->turn() == 1)
+		// 	if(c1) move = agent1->move();
+		// 	else move = getHuman();
+		// else
+		// 	if(c2) move = agent2->move();
+		// 	else move = getHuman();
 		
-		while(!game.isValid(move)) {
-			move = getHuman();
-		}
+		// while(!game.isValid(move)) {
+		// 	move = getHuman();
+		// }
 
 	}
 
