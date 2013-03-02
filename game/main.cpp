@@ -1,19 +1,20 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
 #include <algorithm>
-#include <cmath>
+#include <cstdlib> 
 
 #include "main.h"
 #include "game.h"
-#include "agent.h"
+// #include "agent.h"
 
 using namespace std;
 
-
-int main(int argc, char **argv ) {
+int main (int argc, char* argv[]) {
 	int boardsize = 8;
 	bool c1 = false;
 	bool c2 = false;
@@ -23,7 +24,8 @@ int main(int argc, char **argv ) {
 	for(int i=1; i<argc; i++) {
 		string temp = argv[i];
 		if(temp.compare("-b") == 0) {
-			boardsize = atoi(argv[++i]);
+			if(++i >= argc) usage(temp);
+			boardsize = atoi(argv[i]);
 		} else if (temp.compare("-c1") == 0) {
 			c1 = true;
 		} else if (temp.compare("-c2") == 0) {
@@ -34,18 +36,29 @@ int main(int argc, char **argv ) {
 			usage_err(temp);
 	}
 
+	boardsize = max(4, boardsize)
+	boardsize = min(boardsize, 26);
+	
+	Game game(boardsize);
+	game.Print();
+	return 0;
+
 	//create game
-	while(!game->finish()) {
+	while(!game.IsFinished()) {
 		//play game
 		Move move;
 		
-		//alternate moves
+		// alternate moves
 		if(game->turn() == 1)
 			if(c1) move = agent1->move();
 			else move = getHuman();
 		else
 			if(c2) move = agent2->move();
 			else move = getHuman();
+		
+		while(!game.isValid(move)) {
+			move = getHuman();
+		}
 
 	}
 

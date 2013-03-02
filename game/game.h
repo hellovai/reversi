@@ -21,18 +21,21 @@ class Game{
 	int moves;
 	bool my_status;
 
-	char GetChar(int);
+	string GetChar(int);
 
 public:
 	Game(int);
 	void Print();
+	void Print(bool);
 	void Reset();
 	vector<Move> ValidMove();
+	bool isValid(Move);
 	void MakeMove(Move);
 	int WhoWon();
 	bool IsFinished(){return my_status;};
 
-}
+};
+
 //=================================
 // end guard
 #endif

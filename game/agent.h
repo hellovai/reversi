@@ -13,6 +13,9 @@
 
 using namespace std;
 
+class Reinforce {
+
+}
 
 //=================================
 // end guard
