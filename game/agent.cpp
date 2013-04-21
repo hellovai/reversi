@@ -30,9 +30,13 @@ Move Agent::MakeMove() {
 
 //Private Functions
 Move Agent::Random() {
-	return moveList[rand() % moveList.size()];
+	if(debug) cout<<"Picking from move "<<moveList.size()<<endl;
+	Move temp = moveList[rand() % moveList.size()];
+	if(debug) cout<<"Picked "<<temp.x<<","<<temp.y<<endl;
+	return temp;
 }
 
 void Agent::UpdateMoveList() {
+	if(debug) cout<<"Getting Valid moves"<<endl;
 	moveList = game->ValidMove();
 }

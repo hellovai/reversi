@@ -17,10 +17,12 @@ using namespace std;
 Move getHuman();
 
 int main (int argc, char* argv[]) {
+	srand(time(NULL));
 	int boardsize = 8;
 	bool c1 = false;
 	bool c2 = false;
 	bool dolog = false;
+	bool debug = false;
 
 	//read arguments and define variable based on them
 	for(int i=1; i<argc; i++) {
@@ -34,7 +36,9 @@ int main (int argc, char* argv[]) {
 			c2 = true;
 		} else if (temp.compare("-log") == 0) {
 			dolog = true;
-		} else
+		} else if (temp.compare("-debug") == 0) {
+			debug = true;
+		}  else
 			usage_err(temp);
 	}
 
@@ -43,7 +47,9 @@ int main (int argc, char* argv[]) {
 
 	Game* game = new Game(boardsize);
 	Agent* agent1 = new Agent(game);
+	agent1->setDebug(debug);
 	Agent* agent2 = new Agent(game);
+	agent2->setDebug(debug);
 	game->ValidMove();
 
 	//create game

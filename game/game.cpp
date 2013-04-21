@@ -98,6 +98,7 @@ void Game::Print(bool hint) {
 }
 
 vector<Move> Game::ValidMove(){
+	cout<<"Entering Valid Move"<<endl;
 	vector<Move> moveList;
 	for(int i=0; i<(int)perimeter.size(); i++) {
 		bool val = false;
@@ -125,7 +126,7 @@ void Game::MakeMove ( Move move ) {
 		//if(MoveFlip(move, (i == 4 ? 5 : i), false))
 			//cout<<"We flipped for direction: "<<i<<endl;
 		//else
-			//cout<<"No flip for dirction: "<<i<<endl;
+	cout<<"Flipped stuff!"<<endl;
 	//fix the perimeter
 	vector<Move> possible ( 9, move);
 	for(int i=0; i < 9; i++) 
@@ -141,16 +142,19 @@ void Game::MakeMove ( Move move ) {
 			i--;
 		} else
 			for(int j=0; j<9; (++j == 4 ? ++j : j) )
-				if (perimeter[i].x == possible[j].x && perimeter[i].y == possible[j].y)
+				if (possible[j].x < 0 || possible[j].x >= boardsize || possible[j].y < 0 || possible[j].y >= boardsize)
+					truth[j] = false;
+				else if (perimeter[i].x == possible[j].x && perimeter[i].y == possible[j].y)
 					truth[j] = false;
 				else if(board[possible[j].x][possible[j].y] > 0)
 					truth[j] = false;
-	
+	cout<<"Scanned Moves!"<<endl;
 	for(int i=0; i<9; i++)
 		if(truth[i]) {
 			perimeter.push_back(possible[i]);
 		}
 	current_player = OtherPlayer();
+	cout<<"set player to "<<(current_player == 1 ? "black" : "white")<<endl;
 	if(ValidMove().size() == 0)
 		my_status = true;
 }
