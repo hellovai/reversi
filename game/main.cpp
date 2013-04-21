@@ -10,7 +10,7 @@
 
 #include "main.h"
 #include "game.h"
-// #include "agent.h"
+#include "agent.h"
 
 using namespace std;
 
@@ -41,28 +41,29 @@ int main (int argc, char* argv[]) {
 	boardsize = max(4, boardsize);
 	boardsize = min(boardsize, 26);
 
-	Game game(boardsize);
-	game.ValidMove();
+	Game* game = new Game(boardsize);
+	Agent* agent1 = new Agent(game);
+	Agent* agent2 = new Agent(game);
+	game->ValidMove();
 
 	//create game
-	while(!game.IsFinished()) {
-		game.Print();
+	while(!game->IsFinished()) {
+		game->Print();
 		//play game
 		Move move;
 		
 		// alternate moves
-		// if(game->turn() == 1)
-		// 	if(c1) move = agent1->move();
-		// 	else move = getHuman();
-		// else
-		// 	if(c2) move = agent2->move();
-		// 	else move = getHuman();
-		move = getHuman();
-		while(!game.isValid(move)) {
+		if(game->turn() == 1)
+		 	if(c1) move = agent1->MakeMove();
+		 	else move = getHuman();
+		else
+			if(c2) move = agent2->MakeMove();
+			else move = getHuman();
+		while(!game->isValid(move)) {
 			cout<<"Sorry, ("<<move.x<<" , "<<move.y<<") is invalid!\n";
 			move = getHuman();
 		}
-		game.MakeMove(move);
+		game->MakeMove(move);
 	}
 
 	//display result

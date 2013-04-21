@@ -13,8 +13,25 @@
 
 using namespace std;
 
-class Reinforce {
+class Agent {
+	Game* game;
+	bool debug;
+	vector<Move> moveList;
 
+	//type of agent
+	int type;
+	
+	//types of moves
+	Move Random();
+	void UpdateMoveList(); 
+
+	public:
+		Agent( Game* );
+		void Change_game ( Game* curr_game ) { game = curr_game; };
+		void setDebug( bool debg ) { debug = debg; };
+		void setType( int ty ) { type = ty; };
+		
+		Move MakeMove( );
 };
 
 //=================================

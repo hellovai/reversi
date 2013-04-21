@@ -111,6 +111,7 @@ vector<Move> Game::ValidMove(){
 		}
 		if(val)
 			moveList.push_back(perimeter[i]);
+		//cout<<"We set "<<perimeter[i].x<<","<<perimeter[i].y<<" to 0"<<endl;
 		board[perimeter[i].x][perimeter[i].y] = 0;
 	}
 	return moveList;
@@ -120,26 +121,15 @@ void Game::MakeMove ( Move move ) {
 	board[move.x][move.y] = current_player;
 	//account for swapping middle pieces
 	for(int i=0; i<9; i++)
-		if(MoveFlip(move, (i == 4 ? 5 : i), false))
-			cout<<"We flipped for direction: "<<i<<endl;
-		else
-			cout<<"No flip for dirction: "<<i<<endl;
+		MoveFlip(move, (i == 4 ? 5 : i), false);
+		//if(MoveFlip(move, (i == 4 ? 5 : i), false))
+			//cout<<"We flipped for direction: "<<i<<endl;
+		//else
+			//cout<<"No flip for dirction: "<<i<<endl;
 	//fix the perimeter
 	vector<Move> possible ( 9, move);
-	possible[0].x -=1;
-	possible[0].y -=1;
-	possible[1].y -=1;
-	possible[2].x +=1;
-	possible[2].y -=1;
-
-	possible[3].x -=1;
-	possible[5].x +=1;
-
-	possible[6].x -=1;
-	possible[6].y +=1;
-	possible[7].y +=1;
-	possible[8].x +=1;
-	possible[8].y +=1;
+	for(int i=0; i < 9; i++) 
+		possible[i] = updateMove(possible[i], i);
 
 	vector<bool> truth (9, true);
 	truth[4] = false;
@@ -153,12 +143,16 @@ void Game::MakeMove ( Move move ) {
 			for(int j=0; j<9; (++j == 4 ? ++j : j) )
 				if (perimeter[i].x == possible[j].x && perimeter[i].y == possible[j].y)
 					truth[j] = false;
+				else if(board[possible[j].x][possible[j].y] > 0)
+					truth[j] = false;
 	
 	for(int i=0; i<9; i++)
-		if(truth[i])
+		if(truth[i]) {
 			perimeter.push_back(possible[i]);
-
+		}
 	current_player = OtherPlayer();
+	if(ValidMove().size() == 0)
+		my_status = true;
 }
 
 int Game::WhoWon() {
@@ -214,7 +208,7 @@ bool Game::MoveFlip(Move move, int dir, bool found) {
 		val = false;
 	if(val) {
 		board[move.x][move.y] = current_player;
-		// cout<<"\tShould Have changed: "<<move.x<<", "<<move.y<<endl;
+		//cout<<"\tShould Have changed: "<<move.x<<", "<<move.y<<" to "<<current_player<<endl;
 	}
 	return val;
 }

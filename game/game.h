@@ -38,7 +38,8 @@ public:
 	bool isValid(Move);
 	void MakeMove(Move);
 	int WhoWon();
-	bool IsFinished(){return my_status;};
+	bool IsFinished(){ return my_status; };
+	int turn() { return current_player; };
 
 };
 
