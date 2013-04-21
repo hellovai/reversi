@@ -23,8 +23,11 @@ class Game{
 
 	vector<Move> perimeter;
 
-	string GetChar(int);
+	string GetCharPlayer(int);
 	bool Recurse(Move, int, bool);
+	Move updateMove(Move move, int dir);
+	bool MoveFlip(Move move, int dir, bool found);
+	int OtherPlayer();
 
 public:
 	Game(int);
@@ -32,7 +35,6 @@ public:
 	void Print(bool);
 	void Reset();
 	vector<Move> ValidMove();
-	vector<Move> ValidMove(bool show);
 	bool isValid(Move);
 	void MakeMove(Move);
 	int WhoWon();

@@ -14,6 +14,8 @@
 
 using namespace std;
 
+Move getHuman();
+
 int main (int argc, char* argv[]) {
 	int boardsize = 8;
 	bool c1 = false;
@@ -41,11 +43,10 @@ int main (int argc, char* argv[]) {
 
 	Game game(boardsize);
 	game.ValidMove();
-	game.Print();
-	return 0;
 
 	//create game
 	while(!game.IsFinished()) {
+		game.Print();
 		//play game
 		Move move;
 		
@@ -56,11 +57,12 @@ int main (int argc, char* argv[]) {
 		// else
 		// 	if(c2) move = agent2->move();
 		// 	else move = getHuman();
-		
-		// while(!game.isValid(move)) {
-		// 	move = getHuman();
-		// }
-
+		move = getHuman();
+		while(!game.isValid(move)) {
+			cout<<"Sorry, ("<<move.x<<" , "<<move.y<<") is invalid!\n";
+			move = getHuman();
+		}
+		game.MakeMove(move);
 	}
 
 	//display result
@@ -70,4 +72,17 @@ int main (int argc, char* argv[]) {
 void usage_err(string var) {
 	cout<<"Usage: ./reversi "<<endl;
 	exit(0);
+}
+
+Move getHuman() {
+	Move move;
+	cout<<"Enter Move: ";
+	int a, b;
+	// a = getchar();
+	// b = getchar();
+	cin>>move.x>>move.y;
+	// move.x = (int) a - 65;
+	// move.y = (int) b - 30;
+	cout<<"Attempting: "<<move.x<<", "<<move.y<<endl;
+	return move;
 }
